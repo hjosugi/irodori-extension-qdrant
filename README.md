@@ -34,6 +34,24 @@ The Rust code keeps native ABI exports in `src/lib.rs`, shared buffer/JSON helpe
 | `clientCertificate` | Client certificate / mTLS | `privateKey`, `privateKeyPassphrase` |
 | `customDriverOptions` | Custom driver options | `password`, `token`, `privateKey`, `privateKeyPassphrase` |
 
+## Experience Metadata
+
+- Domains: `vector`
+- Result views: `vectorNeighbors`, `table`, `json`
+- Inspired by: `Qdrant Collections`, `Qdrant filtering`, `Qdrant payload indexes`
+
+| Workflow | Result view | Templates |
+|---|---|---|
+| Similarity search | vectorNeighbors | vector-similarity |
+| Filtered ANN search | vectorNeighbors | vector-filtered |
+| Collection or index health | table | vector-health |
+
+| Template | Label | Language | Result view |
+|---|---|---|---|
+| `vector-similarity` | Qdrant similarity search | `json` | `vectorNeighbors` |
+| `vector-filtered` | Qdrant filtered search | `json` | `vectorNeighbors` |
+| `vector-health` | Qdrant collection info | `text` | `json` |
+
 ## ABI Calls
 
 The scaffold handles these JSON requests today:

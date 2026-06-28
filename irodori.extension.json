@@ -33,7 +33,12 @@
         "wire": "qdrant",
         "module": "qdrant.driver",
         "features": [
-          "metadata"
+          "metadata",
+          "vectorSearch",
+          "embeddingSearch",
+          "hybridSearch",
+          "queryTemplates",
+          "visualization"
         ],
         "connection": {
           "schemaVersion": 1,
