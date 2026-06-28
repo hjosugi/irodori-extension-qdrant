@@ -1,0 +1,200 @@
+{
+  "schemaVersion": 1,
+  "extensionId": "irodori.qdrant",
+  "visibility": "public",
+  "version": "0.1.0",
+  "connector": {
+    "id": "qdrant.connector",
+    "engine": "qdrant",
+    "label": "Qdrant",
+    "aliases": [
+      "qdrant",
+      "Qdrant"
+    ],
+    "defaultPort": 6333,
+    "wire": "qdrant",
+    "module": "qdrant.driver",
+    "features": [
+      "metadata",
+      "vectorSearch",
+      "embeddingSearch",
+      "hybridSearch",
+      "queryTemplates",
+      "visualization"
+    ]
+  },
+  "connection": {
+    "endpoint": {
+      "modes": [
+        "hostPort",
+        "connectionString"
+      ],
+      "defaultPort": 6333,
+      "fields": [
+        {
+          "id": "host",
+          "label": "Host",
+          "type": "string",
+          "profileField": "host",
+          "required": true
+        },
+        {
+          "id": "port",
+          "label": "Port",
+          "type": "number",
+          "profileField": "port",
+          "default": 6333
+        },
+        {
+          "id": "database",
+          "label": "Database",
+          "type": "string",
+          "profileField": "database"
+        }
+      ]
+    },
+    "authMethods": [
+      "none",
+      "connectionString",
+      "apiKey",
+      "bearerToken",
+      "clientCertificate",
+      "customDriverOptions"
+    ],
+    "tls": "optional",
+    "transports": "default",
+    "optionNamespaces": [
+      "qdrant"
+    ],
+    "customDriverOptions": true
+  },
+  "runtime": {
+    "driverLinked": false
+  },
+  "source": {
+    "knowledgeEngineStatus": "recognized_no_connector",
+    "adapter": null
+  },
+  "experience": {
+    "schemaVersion": 1,
+    "domains": [
+      "vector"
+    ],
+    "inspiredBy": [
+      "Qdrant Collections",
+      "Qdrant filtering",
+      "Qdrant payload indexes"
+    ],
+    "resultViews": [
+      "vectorNeighbors",
+      "table",
+      "json"
+    ],
+    "objectTypes": [
+      "collections",
+      "indexes",
+      "vectors",
+      "payloadFields",
+      "partitions",
+      "namespaces"
+    ],
+    "workflows": [
+      {
+        "id": "vector-similarity-search",
+        "label": "Similarity search",
+        "description": "Search nearest neighbors from a pasted vector or embedding variable.",
+        "resultView": "vectorNeighbors",
+        "templateIds": [
+          "vector-similarity"
+        ]
+      },
+      {
+        "id": "vector-filtered-search",
+        "label": "Filtered ANN search",
+        "description": "Combine vector similarity with metadata or scalar filters.",
+        "resultView": "vectorNeighbors",
+        "templateIds": [
+          "vector-filtered"
+        ]
+      },
+      {
+        "id": "vector-health",
+        "label": "Collection or index health",
+        "description": "Inspect vector count, dimensionality, metric, shard, and index status.",
+        "resultView": "table",
+        "templateIds": [
+          "vector-health"
+        ]
+      }
+    ],
+    "queryTemplates": [
+      {
+        "id": "vector-similarity",
+        "label": "Qdrant similarity search",
+        "language": "json",
+        "description": "Search nearest points with payloads but without returning raw vectors.",
+        "insertText": "{\n  \"vector\": \"$vector\",\n  \"limit\": 10,\n  \"with_payload\": true,\n  \"with_vector\": false\n}",
+        "parameters": [
+          {
+            "id": "vector",
+            "label": "Query vector",
+            "type": "json"
+          }
+        ],
+        "resultView": "vectorNeighbors"
+      },
+      {
+        "id": "vector-filtered",
+        "label": "Qdrant filtered search",
+        "language": "json",
+        "description": "Filter payload fields while searching nearest neighbors.",
+        "insertText": "{\n  \"vector\": \"$vector\",\n  \"filter\": {\n    \"must\": [\n      { \"key\": \"$field\", \"match\": { \"value\": \"$value\" } }\n    ]\n  },\n  \"limit\": 10,\n  \"with_payload\": true,\n  \"with_vector\": false\n}",
+        "parameters": [
+          {
+            "id": "vector",
+            "label": "Query vector",
+            "type": "json"
+          },
+          {
+            "id": "field",
+            "label": "Payload field",
+            "type": "string"
+          },
+          {
+            "id": "value",
+            "label": "Payload value",
+            "type": "string"
+          }
+        ],
+        "resultView": "vectorNeighbors"
+      },
+      {
+        "id": "vector-health",
+        "label": "Qdrant collection info",
+        "language": "text",
+        "description": "Inspect collection status and vector config.",
+        "insertText": "GET /collections/$collection",
+        "parameters": [
+          {
+            "id": "collection",
+            "label": "Collection",
+            "type": "string"
+          }
+        ],
+        "resultView": "json"
+      }
+    ],
+    "inspectorHints": [
+      {
+        "id": "vector-dimension",
+        "label": "Dimension badge",
+        "description": "Surface vector dimension and distance metric beside each collection or index."
+      },
+      {
+        "id": "vector-payload",
+        "label": "Payload fields",
+        "description": "Show filterable metadata fields before composing a filtered search."
+      }
+    ]
+  }
+}
