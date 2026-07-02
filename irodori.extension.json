@@ -74,6 +74,14 @@
                 "required": true
               },
               {
+                "id": "protocol",
+                "label": "Protocol (REST or gRPC)",
+                "type": "string",
+                "option": "protocol",
+                "default": "rest",
+                "required": true
+              },
+              {
                 "id": "port",
                 "label": "Port",
                 "type": "number",
@@ -113,6 +121,14 @@
               "label": "Host",
               "type": "string",
               "profileField": "host",
+              "required": true
+            },
+            {
+              "id": "protocol",
+              "label": "Protocol (REST or gRPC)",
+              "type": "string",
+              "option": "protocol",
+              "default": "rest",
               "required": true
             },
             {

@@ -30,19 +30,27 @@
         "connectionString"
       ],
       "defaultPort": 6333,
-      "fields": [
-        {
-          "id": "host",
-          "label": "Host",
-          "type": "string",
-          "profileField": "host",
-          "required": true
-        },
-        {
-          "id": "port",
-          "label": "Port",
-          "type": "number",
-          "profileField": "port",
+        "fields": [
+          {
+            "id": "host",
+            "label": "Host",
+            "type": "string",
+            "profileField": "host",
+            "required": true
+          },
+          {
+            "id": "protocol",
+            "label": "Protocol (REST or gRPC)",
+            "type": "string",
+            "option": "protocol",
+            "default": "rest",
+            "required": true
+          },
+          {
+            "id": "port",
+            "label": "Port",
+            "type": "number",
+            "profileField": "port",
           "default": 6333
         },
         {
