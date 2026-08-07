@@ -454,7 +454,7 @@
   },
   "source": {
     "marketplaceId": "irodori.qdrant",
-    "repository": "https://github.com/hjosugi/irodori-extension-qdrant",
+    "repository": "https://github.com/irodori-table/irodori-extension-qdrant",
     "knowledgeEngineStatus": "recognized_no_connector",
     "adapter": null,
     "adapterSha256": null,
